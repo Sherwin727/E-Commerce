@@ -11,10 +11,7 @@ function Login ()
             <input type="text" className="form-control" placeholder="Password"/>
             <br />
             <button className="btn btn-dark">Login</button>
-
             </div>
-
-            
         </div>
     )
 }

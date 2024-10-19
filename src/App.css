@@ -1,3 +1,27 @@
 .navbar-wrapper a{
   padding-left: 30px;
 }
+.table-container {
+  width: 80%;
+  margin: 20px auto;
+  font-family: Arial, sans-serif;
+}
+.item-table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.item-table th, .item-table td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ccc;
+}
+.item-table th {
+  background-color: #f4f4f4;
+  color: #333;
+}
+.item-table td {
+  font-size: 16px;
+  color: #555;
+}
