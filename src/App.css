@@ -1,6 +1,17 @@
 .navbar-wrapper a{
   padding-left: 30px;
 }
+.navbar{
+margin: 0; 
+padding: 0;
+font-size: 15px;
+font-weight: lighter;
+width: 100%;  
+}
+.nav-link {
+  padding: 0 30px;  
+  margin-right: 35px;
+}
 .table-container {
   width: 80%;
   margin: 20px auto;
@@ -24,4 +35,113 @@
 .item-table td {
   font-size: 16px;
   color: #555;
+}
+
+/* Register */
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  text-align: left;
+}
+.register-box {
+  background-color: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 500px;
+}
+.register-box h2{
+  font-family: Arial, sans-serif;
+  font-size: 34px;
+  margin-bottom: 50px;
+  text-align: left;
+  font-weight: bold;
+}
+.register-control {
+    font-size: 16px;
+    padding: 10px;
+    margin-bottom: 5px;  
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 100%;
+}
+.submit-btn {
+  color: white;
+  font-size: 16px;
+  padding: 10px 20px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+}
+.account-container {
+  margin-top: 50px;  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.inline-text {
+  display: inline;
+  font-size: 14px;
+  margin-right: 5px;  
+}
+
+
+.login-link {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+  transform: translate(-5%, -25%);
+}
+
+
+.login-link:hover {
+  text-decoration: underline;
+ }
+
+
+/* Login */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  text-align: left;
+}
+.login-box {
+  background-color: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 500px;
+}
+.login-box h1{
+  font-family: Arial, sans-serif;
+  font-size: 34px;
+  margin-bottom: 50px;
+  text-align: left;
+  font-weight: bold;
+}
+.login-control {
+    font-size: 16px;
+    padding: 10px;
+    margin-bottom: 5px;  
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 100%;
+}
+.submit-btn {
+  color: white;
+  font-size: 16px;
+  padding: 10px 20px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
 }
