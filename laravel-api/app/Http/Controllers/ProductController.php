@@ -10,8 +10,11 @@ class ProductController extends Controller
     // Display a listing of the products
     public function index()
     {
-        $products = Product::all();
-        return response()->json($products);
+        $products = Product::all(); // Fetch all products
+
+        return Inertia::render('Dashboard', [
+            'products' => $products, // Pass products to the dashboard view
+        ]);
     }
 
     // Show the form for creating a new product
