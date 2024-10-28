@@ -1,7 +1,52 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
+import { useState } from 'react';
+import axios from 'axios';
 
 export default function Dashboard({ products }) {
+    const [showModal, setShowModal] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [barcode, setBarcode] = useState('');
+    const [description, setDescription] = useState('');
+    const [quantity, setQuantity] = useState('');
+    const [price, setPrice] = useState('');
+    const [category, setCategory] = useState('');
+
+    const handleEditClick = (product) => {
+        setSelectedProduct(product);
+        setBarcode(product.item_barcode);
+        setDescription(product.product_description);
+        setQuantity(product.available_quantity);
+        setPrice(product.price);
+        setCategory(product.category);
+        setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+    };
+
+    const handleUpdateProduct = async (e) => {
+        e.preventDefault();
+        
+        try {
+            // Update the product in the backend
+            await axios.put(`/api/products/${selectedProduct.id}`, {
+                item_barcode: barcode,
+                product_description: description,
+                available_quantity: quantity,
+                price: price,
+                category: category,
+            });
+
+            // Close the modal and refresh the page to show updated data
+            setShowModal(false);
+            window.location.reload();
+        } catch (error) {
+            console.error("Error updating product:", error);
+        }
+    };
+
     return (
         <AuthenticatedLayout
             header={
@@ -30,7 +75,12 @@ export default function Dashboard({ products }) {
                                                     <p><strong>Category:</strong> {product.category}</p>
                                                 </div>
                                                 <div className="flex space-x-2">
-                                                    <button className="bg-blue-500 text-white px-3 py-1 rounded">Edit</button>
+                                                    <button
+                                                        onClick={() => handleEditClick(product)}
+                                                        className="bg-blue-500 text-white px-3 py-1 rounded"
+                                                    >
+                                                        Edit
+                                                    </button>
                                                     <button className="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
                                                 </div>
                                             </div>
@@ -44,6 +94,77 @@ export default function Dashboard({ products }) {
                     </div>
                 </div>
             </div>
+
+            {/* Modal for editing */}
+            {showModal && (
+                <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
+                    <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+                        <h2 className="text-lg font-semibold mb-4">Edit Product</h2>
+                        <form onSubmit={handleUpdateProduct}>
+                            <label className="block">
+                                Barcode:
+                                <input
+                                    type="text"
+                                    value={barcode}
+                                    onChange={(e) => setBarcode(e.target.value)}
+                                    className="border rounded w-full p-2 mt-1"
+                                />
+                            </label>
+                            <label className="block mt-4">
+                                Description:
+                                <input
+                                    type="text"
+                                    value={description}
+                                    onChange={(e) => setDescription(e.target.value)}
+                                    className="border rounded w-full p-2 mt-1"
+                                />
+                            </label>
+                            <label className="block mt-4">
+                                Quantity:
+                                <input
+                                    type="number"
+                                    value={quantity}
+                                    onChange={(e) => setQuantity(e.target.value)}
+                                    className="border rounded w-full p-2 mt-1"
+                                />
+                            </label>
+                            <label className="block mt-4">
+                                Price:
+                                <input
+                                    type="number"
+                                    value={price}
+                                    onChange={(e) => setPrice(e.target.value)}
+                                    className="border rounded w-full p-2 mt-1"
+                                />
+                            </label>
+                            <label className="block mt-4">
+                                Category:
+                                <input
+                                    type="text"
+                                    value={category}
+                                    onChange={(e) => setCategory(e.target.value)}
+                                    className="border rounded w-full p-2 mt-1"
+                                />
+                            </label>
+                            <div className="flex justify-end mt-6">
+                                <button
+                                    type="button"
+                                    onClick={handleCloseModal}
+                                    className="bg-gray-300 px-4 py-2 rounded mr-2"
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    type="submit"
+                                    className="bg-blue-500 text-white px-4 py-2 rounded"
+                                >
+                                    Update
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
         </AuthenticatedLayout>
     );
 }
