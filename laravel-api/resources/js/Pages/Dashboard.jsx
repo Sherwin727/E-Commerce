@@ -47,6 +47,18 @@ export default function Dashboard({ products }) {
         }
     };
 
+    const handleDeleteProduct = async (productId) => {
+        if (confirm("Are you sure you want to delete this product?")) {
+            try {
+                await axios.delete(`/api/products/${productId}`);
+                // Refresh the page to show updated data after deletion
+                window.location.reload();
+            } catch (error) {
+                console.error("Error deleting product:", error);
+            }
+        }
+    };
+
     return (
         <AuthenticatedLayout
             header={
@@ -81,7 +93,12 @@ export default function Dashboard({ products }) {
                                                     >
                                                         Edit
                                                     </button>
-                                                    <button className="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
+                                                    <button
+                                                        onClick={() => handleDeleteProduct(product.id)}
+                                                        className="bg-red-500 text-white px-3 py-1 rounded"
+                                                    >
+                                                        Delete
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
