@@ -11,7 +11,28 @@ export default function Dashboard({ products }) {
     const [quantity, setQuantity] = useState('');
     const [price, setPrice] = useState('');
     const [category, setCategory] = useState('');
+    const [isEditMode, setIsEditMode] = useState(false);
 
+    const handleAddClick = () => {
+        setShowModal(true);
+        setIsEditMode(false);
+    }
+    const handleAddProduct = async (e) =>{
+        e.preventDefault();
+        try{
+            await axios.post(`/api/products`, {
+                item_barcode: barcode,
+                product_description: description,
+                available_quantity: quantity,
+                price: price,
+                category: category
+            });
+            setShowModal(false);
+        }catch(error){
+            console.error("Error adding product, reason:", error);
+        }
+    };
+    
     const handleEditClick = (product) => {
         setSelectedProduct(product);
         setBarcode(product.item_barcode);
@@ -20,6 +41,7 @@ export default function Dashboard({ products }) {
         setPrice(product.price);
         setCategory(product.category);
         setShowModal(true);
+        setIsEditMode(true);
     };
 
     const handleCloseModal = () => {
@@ -64,9 +86,31 @@ export default function Dashboard({ products }) {
             header={
                 <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
                     Dashboard
+
+                <div>
+                    <button
+                        onClick={handleAddClick}
+                        type="submit"
+                        className="bg-blue-500 text-white px-3 py-2 rounded">
+                        Add
+                    </button>
+                </div>
                 </h2>
             }
         >
+            <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                <form >
+                    <input
+                    className="text-black px-2 py-1 rounded"
+                    type="text"
+                    placeholder="Search...">
+                    </input>
+                    <button
+                    className="bg-blue-500 text-white px-4 py-2 rounded">
+                        Search
+                    </button>
+                </form>
+            </div>
             <Head title="Dashboard" />
 
             <div className="py-12">
@@ -80,6 +124,7 @@ export default function Dashboard({ products }) {
                                         <div key={product.id} className="border border-gray-300 p-4 rounded-lg">
                                             <div className="flex justify-between items-center">
                                                 <div>
+
                                                     <p><strong>Barcode:</strong> {product.item_barcode}</p>
                                                     <p><strong>Description:</strong> {product.product_description}</p>
                                                     <p><strong>Quantity:</strong> {product.available_quantity}</p>
@@ -105,7 +150,18 @@ export default function Dashboard({ products }) {
                                     ))}
                                 </div>
                             ) : (
-                                <p>No products available.</p>
+                                <div>
+                                    <p>No products available...</p><br/>
+                                    <p>Would you like to add one?</p>
+                                    <div>
+                                        <button
+                                            onClick={() => handleAddClick()}
+                                            className="bg-red-500 text-white px-3 py-1 rounded"
+                                        >
+                                            Add Product
+                                        </button>
+                                    </div>
+                                </div>
                             )}
                         </div>
                     </div>
@@ -116,8 +172,14 @@ export default function Dashboard({ products }) {
             {showModal && (
                 <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
                     <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-                        <h2 className="text-lg font-semibold mb-4">Edit Product</h2>
-                        <form onSubmit={handleUpdateProduct}>
+
+                        <h2 className="text-lg font-semibold mb-4">
+                            {isEditMode ? "Edit Product" : "Add Product"}
+                        </h2>
+
+                        <form onSubmit=
+                            {isEditMode ? handleUpdateProduct : handleAddProduct}
+                        >
                             <label className="block">
                                 Barcode:
                                 <input
@@ -175,7 +237,7 @@ export default function Dashboard({ products }) {
                                     type="submit"
                                     className="bg-blue-500 text-white px-4 py-2 rounded"
                                 >
-                                    Update
+                                    {isEditMode ? "Update" : "Add"}
                                 </button>
                             </div>
                         </form>
