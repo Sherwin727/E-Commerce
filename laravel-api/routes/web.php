@@ -5,6 +5,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CustomerDashboardController;
 
 
 Route::get('/', function () {
@@ -15,6 +16,8 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+
+Route::get('/customer-dashboard', [CustomerDashboardController::class, 'index'])->name('customer.dashboard'); 
 
 Route::get('/dashboard', DashboardController::class)
     ->middleware(['auth', 'verified'])

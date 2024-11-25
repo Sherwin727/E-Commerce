@@ -88,10 +88,15 @@ export default function Login({ status, canResetPassword }) {
                         >
                             Forgot your password?
                         </Link>
+                        
                     )}
 
+
+                    <PrimaryButton className="ms-4" disabled={processing} >
+                        Login 
+                    </PrimaryButton>
                     <PrimaryButton className="ms-4" disabled={processing}>
-                        Log in
+                        Admin
                     </PrimaryButton>
                 </div>
             </form>

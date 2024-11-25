@@ -87,11 +87,12 @@ export default function Dashboard({ products }) {
                 <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
                     Dashboard
 
+            
                 <div>
                     <button
                         onClick={handleAddClick}
                         type="submit"
-                        className="bg-blue-500 text-white px-3 py-2 rounded">
+                        className="bg-blue-500 text-white px-3 py-2 rounded ">
                         Add
                     </button>
                 </div>

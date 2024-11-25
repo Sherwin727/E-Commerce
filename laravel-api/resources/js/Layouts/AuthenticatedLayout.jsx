@@ -31,6 +31,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                     Dashboard
                                 </NavLink>
                             </div>
+                            
                         </div>
 
                         <div className="hidden sm:ms-6 sm:flex sm:items-center">
@@ -65,6 +66,11 @@ export default function AuthenticatedLayout({ header, children }) {
                                             href={route('profile.edit')}
                                         >
                                             Profile
+                                        </Dropdown.Link>
+                                        <Dropdown.Link
+                                            href={route('customer.dashboard')}
+                                        >
+                                            Customer
                                         </Dropdown.Link>
                                         <Dropdown.Link
                                             href={route('logout')}
