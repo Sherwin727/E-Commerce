@@ -1,39 +1,54 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
+import { useCart } from '../context/CartContext'; // Import the cart context
 
-const AddProduct = ({ onAddProduct }) => {
+const AddProduct = () => {
     const [product, setProduct] = useState({
         id: '',
         description: '',
         price: '',
         quantity: '',
-        category: ''
+        category: '',
     });
+
+    const { addToCart } = useCart(); // Access the addToCart function from the context
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setProduct(prevState => ({
+        setProduct((prevState) => ({
             ...prevState,
-            [name]: value
+            [name]: value,
         }));
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        // Ensure all fields are filled
         const { id, description, price, quantity, category } = product;
 
         if ([id, description, price, quantity, category].includes('')) {
             return alert('Please fill in all fields');
         }
 
-        onAddProduct(product);
+        // Add the product to the cart
+        addToCart({
+            id,
+            description,
+            price: parseFloat(price), // Ensure numerical values are of the correct type
+            quantity: parseInt(quantity, 10),
+            category,
+        });
+
+        // Reset form fields
         setProduct({ id: '', description: '', price: '', quantity: '', category: '' });
+        alert('Product added to the cart!');
     };
 
     return (
         <div className="AddProd-Container">
             <div className="Insert-Box">
-                <h2 style={{ textAlign: 'center' }}>Add New Product</h2>
+                <h2 style={{ textAlign: 'center' }}>Add New Product to Cart</h2>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group controlId="formId">
                         <Form.Label>ID:</Form.Label>
@@ -100,7 +115,14 @@ const AddProduct = ({ onAddProduct }) => {
                         </Form.Select>
                     </Form.Group>
                     <br />
-                    <Button className="submit-btn" variant="dark" type="submit" style={{ width: '100%' }}>Add Product</Button>
+                    <Button
+                        className="submit-btn"
+                        variant="dark"
+                        type="submit"
+                        style={{ width: '100%' }}
+                    >
+                        Add Product to Cart
+                    </Button>
                 </Form>
             </div>
         </div>
