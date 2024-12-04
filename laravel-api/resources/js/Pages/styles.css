@@ -1,0 +1,25 @@
+/* Add to the CSS file */
+.nav-links {
+    display: flex;
+    justify-content: center;  
+    align-items: center;      
+    gap: 1rem;               
+    margin-top: 50px;  
+    transform: translate(80%, -750%);       
+}
+
+
+.nav-links-left {
+    justify-content: flex-start; 
+}
+
+
+.nav-links-right {
+    justify-content: flex-end;  
+}
+
+
+body{
+    background-color: #F5F7F8;
+}
+

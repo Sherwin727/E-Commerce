@@ -1,7 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import { useState } from 'react';
-import axios from 'axios';
+import './styles.css';
 
 export default function CustomerDashboard({ products }) {
     const [showModal, setShowModal] = useState(false);
@@ -12,12 +12,10 @@ export default function CustomerDashboard({ products }) {
     const handleAddToCart = (product) => {
         const existingProduct = cart.find(item => item.id === product.id);
         if (existingProduct) {
-            // If the product is already in the cart, increase the quantity
-            setCart(cart.map(item => 
+            setCart(cart.map(item =>
                 item.id === product.id ? { ...existingProduct, quantity: existingProduct.quantity + 1 } : item
             ));
         } else {
-            // If the product is not in the cart, add it
             setCart([...cart, { ...product, quantity: 1 }]);
         }
     };
@@ -32,24 +30,65 @@ export default function CustomerDashboard({ products }) {
     };
 
     const handleCheckout = () => {
-        // Implement checkout logic here
         alert('Proceeding to checkout...');
-        href=route('customer.shipDetails');
-        // Clear the cart after checkout
         setCart([]);
     };
 
     return (
         <AuthenticatedLayout
             header={
-                <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-                    Customer Dashboard
-                </h2>
+                <div className="flex justify-between items-start">
+                    <div>
+                        <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
+                            Customer Dashboard
+                        </h2>
+                        <button
+                            onClick={() => window.history.back()}
+                            className="mt-2 bg-gray-500 text-white px-4 py-2 rounded text-sm"
+                        >
+                            Back
+                        </button>
+                    </div>
+                    <div className="cart bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 p-4 rounded-lg shadow-sm">
+                        <h3 className="font-semibold">Your Cart</h3>
+                        {cart.length > 0 ? (
+                            <>
+                                {cart.map((item) => (
+                                    <div
+                                        key={item.id}
+                                        className="flex justify-between items-center border-b py-2"
+                                    >
+                                        <p className="text-sm">
+                                            <strong>{item.product_description}</strong> - ${item.price} x {item.quantity}
+                                        </p>
+                                        <button
+                                            onClick={() => handleRemoveFromCart(item.id)}
+                                            className="bg-red-500 text-white px-2 py-1 rounded text-xs"
+                                        >
+                                            Remove
+                                        </button>
+                                    </div>
+                                ))}
+                                <h4 className="font-semibold mt-4">
+                                    Total: ${cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}
+                                </h4>
+                                <button
+                                    onClick={handleCheckout}
+                                    className="bg-blue-500 text-white px-4 py-2 mt-2 rounded text-sm"
+                                >
+                                    <a href={route('customer.shipDetails')}>Checkout</a>
+                                </button>
+                            </>
+                        ) : (
+                            <p>Your cart is empty.</p>
+                        )}
+                    </div>
+                </div>
             }
         >
             <Head title="Customer Dashboard" />
 
-            <div className="mx-auto max-w-7xl sm:px-6 lg:px-8" >
+            <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <form onSubmit={handleSearch}>
                     <input
                         className="text-black px-2 py-1 rounded"
@@ -59,7 +98,8 @@ export default function CustomerDashboard({ products }) {
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
                     <button
-                        className="bg-blue-500 text-white px-4 py-2 rounded">
+                        className="bg-blue-500 text-white px-4 py-2 rounded"
+                    >
                         Search
                     </button>
                 </form>
@@ -103,52 +143,6 @@ export default function CustomerDashboard({ products }) {
                     </div>
                 </div>
             </div>
-
-            {/* Cart Section */}
-            <div className="py-12">
-  <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-    <h3 className="text-lg text-black font-semibold">Your Cart</h3>
-    {cart.length > 0 ? (
-      <div className="border border-gray-300 p-4 rounded-lg">
-        {cart.map((item) => (
-          <div key={item.id} className="flex justify-between text-black items-center border border-gray-300 p-4 rounded-lg">
-            <p>
-              <strong>{item.product_description}</strong> - ${item.price} x {item.quantity}
-            </p>
-            <button
-              onClick={() => handleRemoveFromCart(item.id)}
-              className="bg-red-500 text-black px-3 py-1 rounded"
-            >
-              Remove
-            </button>
-          </div>
-        ))}
-
-        {/* Calculate and display the total */}
-        <div className="mt-4 text-black">
-          <h4 className="font-semibold">
-            Total: $
-            {cart
-              .reduce((total, item) => total + item.price * item.quantity, 0)
-              .toFixed(2)}
-          </h4>
-        </div>
-
-        <div className="mt-4">
-          <button
-            onClick={handleCheckout}
-            className="bg-blue-500 text-black px-4 py-2 rounded"
-          >
-            <a href={route('customer.shipDetails')}>Checkout</a>
-          </button>
-        </div>
-      </div>
-    ) : (
-      <p>Your cart is empty.</p>
-    )}
-  </div>
-</div>
-
         </AuthenticatedLayout>
     );
 }
