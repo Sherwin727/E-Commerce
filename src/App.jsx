@@ -3,6 +3,7 @@ import reactLogo from './assets/react.svg'
 import Header from './Header'
 import Login from './Login'
 import Register from './Register'
+import { CartProvider } from './assets/CartContext'; // Import the CartProvider
 import AddProduct from './AddProduct'
 import UpdateProduct from './UpdateProduct'
 import ViewProduct from './ViewProduct'

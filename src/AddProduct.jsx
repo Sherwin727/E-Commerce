@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useCart } from './assets/CartContext'; // Import the cart context
 
-
 const AddProduct = () => {
-
     const [product, setProduct] = useState({
         id: '',
         description: '',
@@ -26,21 +24,22 @@ const AddProduct = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Ensure all fields are filled
+        // Destructure values from the product state
         const { id, description, price, quantity, category } = product;
 
         if ([id, description, price, quantity, category].includes('')) {
             return alert('Please fill in all fields');
         }
 
-        // Add the product to the cart
-        addToCart({
+        const productToAdd = {
             id,
             description,
-            price: parseFloat(price), // Ensure numerical values are of the correct type
+            price: parseFloat(price),
             quantity: parseInt(quantity, 10),
             category,
-        });
+        };
+
+        addToCart(productToAdd);
 
         // Reset form fields
         setProduct({ id: '', description: '', price: '', quantity: '', category: '' });
