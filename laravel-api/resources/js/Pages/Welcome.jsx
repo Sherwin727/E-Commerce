@@ -38,9 +38,9 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                     />
                                 </svg> */}
                             </div>
-                            <nav className="nav-links"> {/* Add the default or custom class for positioning */}
+                            <nav className="nav-links"> 
     {auth.user ? (
-        <div className="flex gap-4"> {/* Optionally, you can use the grid class here */}
+        <div className="flex gap-4"> 
             <Link
                 href={route('dashboard')}
                 className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
@@ -75,8 +75,8 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
 
                         </header>
 
-                        <main className="mt-20 flex flex-col items-center justify-center text-center"> {/* Reduced margin-top for the main container */}
-    <h1 className="text-[100px] font-extrabold text-black lg:text-[80px]"> {/* Adjusted margin-top for the h1 element */}
+                        <main className="mt-20 flex flex-col items-center justify-center text-center"> 
+    <h1 className="text-[100px] font-extrabold text-black lg:text-[80px]"> 
         WELCOME TO E-COMMERCE
     </h1>
     <p className="mt-4 text-lg text-black">
