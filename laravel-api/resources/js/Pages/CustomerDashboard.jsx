@@ -49,7 +49,7 @@ export default function CustomerDashboard({ products }) {
         >
             <Head title="Customer Dashboard" />
 
-            <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div className="mx-auto max-w-7xl sm:px-6 lg:px-8" >
                 <form onSubmit={handleSearch}>
                     <input
                         className="text-black px-2 py-1 rounded"
@@ -106,37 +106,49 @@ export default function CustomerDashboard({ products }) {
 
             {/* Cart Section */}
             <div className="py-12">
-                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <h3 className="text-lg text-black font-semibold">Your Cart</h3>
-                    {cart.length > 0 ? (
-                        <div className="border border-gray-300 p-4 rounded-lg">
-                            {cart.map(item => (
-                                <div key={item.id} className="flex justify-between text-black items-center">
-                                    <p ><strong>{item.product_description}</strong> - ${item.price} x {item.quantity}</p>
-                                    <button
-                                        onClick={() => handleRemoveFromCart(item.id)}
-                                        className="bg-red-500 text-black px-3 py-1 rounded"
-                                    >
-                                        Remove
-                                    </button>
-                                </div>
-                            ))}
-                            <div className="mt-4">
-                                <button
-                                    onClick={handleCheckout}
-                                    className="bg-blue-500 text-black px-4 py-2 rounded"
-                                >
-                                    <a href={route('customer.shipDetails')}>
-                                    Checkout
-                                    </a>
-                                </button>
-                            </div>
-                        </div>
-                    ) : (
-                        <p>Your cart is empty.</p>
-                    )}
-                </div>
-            </div>
+  <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+    <h3 className="text-lg text-black font-semibold">Your Cart</h3>
+    {cart.length > 0 ? (
+      <div className="border border-gray-300 p-4 rounded-lg">
+        {cart.map((item) => (
+          <div key={item.id} className="flex justify-between text-black items-center border border-gray-300 p-4 rounded-lg">
+            <p>
+              <strong>{item.product_description}</strong> - ${item.price} x {item.quantity}
+            </p>
+            <button
+              onClick={() => handleRemoveFromCart(item.id)}
+              className="bg-red-500 text-black px-3 py-1 rounded"
+            >
+              Remove
+            </button>
+          </div>
+        ))}
+
+        {/* Calculate and display the total */}
+        <div className="mt-4 text-black">
+          <h4 className="font-semibold">
+            Total: $
+            {cart
+              .reduce((total, item) => total + item.price * item.quantity, 0)
+              .toFixed(2)}
+          </h4>
+        </div>
+
+        <div className="mt-4">
+          <button
+            onClick={handleCheckout}
+            className="bg-blue-500 text-black px-4 py-2 rounded"
+          >
+            <a href={route('customer.shipDetails')}>Checkout</a>
+          </button>
+        </div>
+      </div>
+    ) : (
+      <p>Your cart is empty.</p>
+    )}
+  </div>
+</div>
+
         </AuthenticatedLayout>
     );
 }

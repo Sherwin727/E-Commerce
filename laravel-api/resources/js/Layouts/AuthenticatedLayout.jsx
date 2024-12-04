@@ -28,7 +28,13 @@ export default function AuthenticatedLayout({ header, children }) {
                                     href={route('dashboard')}
                                     active={route().current('dashboard')}
                                 >
-                                    Dashboard
+                                    Admin Dashboard
+                                </NavLink>
+                                <NavLink
+                                    href={route('customer.dashboard')}
+                                    active={route().current('customer.dashboard')}
+                                >
+                                    Customer Dashboard
                                 </NavLink>
                             </div>
                             
@@ -67,11 +73,19 @@ export default function AuthenticatedLayout({ header, children }) {
                                         >
                                             Profile
                                         </Dropdown.Link>
+
+                                        <Dropdown.Link
+                                            href={route('dashboard')}
+                                        >
+                                            Admin
+                                        </Dropdown.Link>
+
                                         <Dropdown.Link
                                             href={route('customer.dashboard')}
                                         >
                                             Customer
                                         </Dropdown.Link>
+
                                         <Dropdown.Link
                                             href={route('logout')}
                                             method="post"
