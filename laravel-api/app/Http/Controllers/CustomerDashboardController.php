@@ -17,4 +17,12 @@ class CustomerDashboardController extends Controller
             'products' => $products,
         ]);
     }
+
+    public function shipDetails()
+    {
+        return Inertia::render('ShippingDetails');
+    }
+
+
+
 }

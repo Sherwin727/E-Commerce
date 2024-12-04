@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { useCart } from '../context/CartContext'; // Import the cart context
+import { useCart } from './assets/CartContext'; // Import the cart context
+
 
 const AddProduct = () => {
+
     const [product, setProduct] = useState({
         id: '',
         description: '',

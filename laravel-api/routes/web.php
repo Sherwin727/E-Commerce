@@ -17,7 +17,11 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/customer-dashboard', [CustomerDashboardController::class, 'index'])->name('customer.dashboard'); 
+Route::get('/customer-dashboard', [CustomerDashboardController::class, 'index'])
+    ->name('customer.dashboard'); 
+
+Route::get('/shipDetails',[CustomerDashboardController::class, 'shipDetails'])
+    ->name('customer.shipDetails');
 
 Route::get('/dashboard', DashboardController::class)
     ->middleware(['auth', 'verified'])
